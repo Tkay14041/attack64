@@ -50,33 +50,26 @@ function initialize(ctx){
 function drawStones(ctx){
     for(var i=1;i<10;i++){
         for(var j=1;j<10;j++){
+            var color = '';
             if(point[i][j] == 1){
-                drawBlackStone(ctx,i-1,j-1);
+                color = 'black';
             }else if(point[i][j] == 2){
-                drawWhiteStone(ctx,i-1,j-1);
+                color = 'white';
             }
+            fixStoneColor(ctx,i-1,j-1,color);
         }
     }
 }
- 
-// draw a black stone
-function drawBlackStone(ctx,inx,iny){
+
+function fixStoneColor(ctx,inx,iny,color){
+    if (color != 'black' && color != 'white') return;
     ctx.beginPath();
     ctx.arc(40+inx*80, 40+iny*80, 35, 0, Math.PI*2, true);
-    ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'black';
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
     ctx.fill();
 }
- 
-// draw a white stone
-function drawWhiteStone(ctx,inx,iny){
-    ctx.beginPath();
-    ctx.arc(40+inx*80, 40+iny*80, 35, 0, Math.PI*2, true);
-    ctx.strokeStyle = 'white';
-    ctx.fillStyle = 'white';
-    ctx.fill();
-}
- 
+
 // place and flip the stones
 function flipStones(inx,iny){
     // fliped or not
