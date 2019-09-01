@@ -19,7 +19,7 @@ onload = function(){
                 mouseX = event.pageX;
                 mouseY = event.pageY;
                 fixCoordinate(canvas);
-                placeStone(ctx);
+                flipStones(inx,iny);
                 drawStones(ctx);
                 },
                 false);
@@ -45,44 +45,6 @@ function initialize(ctx){
     drawStones(ctx);
 }
  
-function placeStone(ctx){
-    if(mouseX < 80){
-    inx = 1;
-    }else if(mouseX < 160){
-    inx = 2;
-    }else if(mouseX < 240){
-    inx = 3;
-    }else if(mouseX < 320){
-    inx = 4;
-    }else if(mouseX < 400){
-    inx = 5;
-    }else if(mouseX < 480){
-    inx = 6;
-    }else if(mouseX < 560){
-    inx = 7;
-    }else if(mouseX < 640){
-    inx = 8;
-    }
- 
-    if(mouseY <  80){
-    iny = 1;
-    }else if(mouseY < 160){
-    iny = 2;
-    }else if(mouseY < 240){
-    iny = 3;
-    }else if(mouseY < 320){
-    iny = 4;
-    }else if(mouseY < 400){
-    iny = 5;
-    }else if(mouseY < 480){
-    iny = 6;
-    }else if(mouseY < 560){
-    iny = 7;
-    }else if(mouseY < 640){
-    iny = 8;
-    }
-    flipStones(inx,iny);
-}
  
 // draw stones on the board
 function drawStones(ctx){
@@ -149,4 +111,13 @@ function fixCoordinate(canvas){
     rect = canvas.getBoundingClientRect();
     mouseX = mouseX - rect.left;
     mouseY = mouseY - rect.top;
+
+    if (mouseX < 0 || 640 < mouseX) {
+        return;
+    } else if (mouseY < 0 || 640 < mouseY) {
+        return;
+    }
+
+    inx = Math.floor(mouseX / 80) + 1;
+    iny = Math.floor(mouseY / 80) + 1;
 }
