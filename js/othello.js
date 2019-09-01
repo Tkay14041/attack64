@@ -65,7 +65,10 @@ function fixStoneColor(ctx,inx,iny,color){
     if (color != 'black' && color != 'white') return;
 
     ctx.beginPath();
-    ctx.arc(40+inx*80, 40+iny*80, 35, 0, Math.PI*2, true);
+    var centerX = 40 + inx * 80;
+    var centerY = 40 + iny * 80;
+    var radius = 35;
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.fill();
