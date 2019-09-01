@@ -21,7 +21,8 @@ onload = function(){
                 fixCoordinate(canvas);
                 flipStones(inx,iny);
                 drawStones(ctx);
-                countStones();
+                checkGameOver();
+                
                 },
                 false);
     initialize(ctx);
@@ -120,9 +121,9 @@ function fixCoordinate(canvas){
 }
 
 function countStones() {
+    var emptyCount = 0;
     var blackCount = 0;
     var whiteCount = 0;
-    var emptyCount = 0;
 
     for (var i = 0; i < 10; i++) {
         for (var j = 0; j < 10; j++) {
@@ -140,5 +141,39 @@ function countStones() {
         }
     }
 
-    console.log(blackCount, whiteCount, emptyCount);
+    var stones = {'empty':emptyCount, 'black':blackCount, 'white':whiteCount};
+    return stones;
+}
+
+function checkGameOver() {
+    var stones = countStones();
+    console.log(stones['black'], stones['white'], stones['empty']);
+
+    if (stones['empty'] == 36) {
+        var winMessage;
+        if (stones['black'] < stones['white']) {
+            winMessage = '白の勝ちです。';
+        } else if (stones['black'] > stones['white']) {
+            winMessage = '黒の勝ちです。';
+        } else {
+            winMessage = '引き分けです。'
+        }
+        var alertFunc = function() {
+            alert('ゲーム終了です。\n' + winMessage);
+        }
+        setTimeout(alertFunc, 500);
+        return;
+    } 
+    
+    if (stones['black'] == 0) {
+        var alertFunc = function() {
+            alert('ゲーム終了です。\n白の勝ちです。');
+        }
+        setTimeout(alertFunc, 500);
+    } else if (stones['white'] == 0) {
+        var alertFunc = function() {
+            alert('ゲーム終了です。\n黒の勝ちです。');
+        }
+        setTimeout(alertFunc, 500);
+    }
 }
