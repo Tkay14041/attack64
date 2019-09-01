@@ -21,6 +21,7 @@ onload = function(){
                 fixCoordinate(canvas);
                 flipStones(inx,iny);
                 drawStones(ctx);
+                countStones();
                 },
                 false);
     initialize(ctx);
@@ -116,4 +117,28 @@ function fixCoordinate(canvas){
 
     inx = Math.floor(mouseX / 80) + 1;
     iny = Math.floor(mouseY / 80) + 1;
+}
+
+function countStones() {
+    var blackCount = 0;
+    var whiteCount = 0;
+    var emptyCount = 0;
+
+    for (var i = 0; i < 10; i++) {
+        for (var j = 0; j < 10; j++) {
+            switch (point[i][j]) {
+                case 0:
+                    emptyCount++;
+                    break;
+                case 1:
+                    blackCount++;
+                    break;
+                case 2:
+                    whiteCount++;
+                    break;
+            }
+        }
+    }
+
+    console.log(blackCount, whiteCount, emptyCount);
 }
