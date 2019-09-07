@@ -11,6 +11,9 @@ for(var i = 0; i < 10; i++){
     point[i] = [0,0,0,0,0,0,0,0,0,0];
 }
 
+var passCount = 0;
+
+
 onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -22,7 +25,10 @@ onload = function(){
                 flipStones(inx,iny);
                 drawStones(ctx);
                 checkGameOver();
-                
+                // TODO: 次のターンのプレイヤーが石を置けるかチェック
+                    // 置ければpassを0にリセット&continue, 置けなければpass++
+                        // pass == 1 → さらにturnColorチェンジ
+                        // pass == 2 → gameOver
                 },
                 false);
     initialize(ctx);
@@ -99,6 +105,7 @@ function flipStones(inx,iny){
         }
     }
     if (flag) {
+        passCount = 0;
         point[inx][iny] = colorOfTurn;
         colorOfTurn = oppositeColor;
     }
@@ -176,4 +183,38 @@ function checkGameOver() {
         }
         setTimeout(alertFunc, 500);
     }
+}
+
+function canPlace() {
+    var oppositeColor = 3 - colorOfTurn;
+
+    // find empty cell from actual game board
+    var emptyCells = [];
+    for (i = 1; i < 9; i++) {
+        for (j = 1; j < 9; j++) {
+            if (point[i][j] == 0) {
+                var emptyCell = [i, j];
+                emptyCells.push(emptyCell);
+            }
+        }
+    }
+    // whether place stone or not for each empty cell
+    for (var emptyCell of emptyCells) {
+        var inx = emptyCell[0];
+        var iny = emptyCell[1];
+        for (var dx = -1; dx <= 1; dx++) {
+            for (var dy = -1; dy <= 1; dy++) {
+                if (dx == 0 && dy == 0)　continue;
+                var n = 1;
+                while (point[inx + n * dx][iny + n * dy] == oppositeColor) {
+                    n++;
+                }
+                if (n > 1 && point[inx + n * dx][iny + n * dy] == colorOfTurn) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
 }
