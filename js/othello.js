@@ -10,9 +10,7 @@ var point = new Array(10);
 for(var i = 0; i < 10; i++){
     point[i] = [0,0,0,0,0,0,0,0,0,0];
 }
-
 var passCount = 0;
-
 
 onload = function(){
     var canvas = document.getElementById('canvas');
@@ -24,10 +22,6 @@ onload = function(){
                 fixCoordinate(canvas);
                 flipStones(inx,iny);
                 drawStones(ctx);
-                // TODO: 次のターンのプレイヤーが石を置けるかチェック
-                    // 置ければpassを0にリセット&continue, 置けなければpass++
-                        // pass == 1 → さらにturnColorチェンジ
-                        // pass == 2 → gameOver
                 passCheck()
                 checkGameOver();
                 },
@@ -72,7 +66,6 @@ function drawStones(ctx){
 
 function fixStoneColor(ctx,inx,iny,color){
     if (color != 'black' && color != 'white') return;
-
     ctx.beginPath();
     var centerX = 40 + inx * 80;
     var centerY = 40 + iny * 80;
@@ -155,7 +148,6 @@ function countStones() {
 
 function checkGameOver() {
     var stones = countStones();
-    console.log(stones['black'], stones['white'], stones['empty']);
 
     if (stones['empty'] == 36 || passCount == 2) {
         var winMessage;
@@ -186,10 +178,7 @@ function checkGameOver() {
     }
 }
 
-function canPlace() {
-    var oppositeColor = 3 - colorOfTurn;
-
-    // find empty cell from actual game board
+function findEmptyCells() {
     var emptyCells = [];
     for (i = 1; i < 9; i++) {
         for (j = 1; j < 9; j++) {
@@ -199,6 +188,12 @@ function canPlace() {
             }
         }
     }
+    return emptyCells;
+}
+
+function canPlace() {
+    var oppositeColor = 3 - colorOfTurn;
+    var emptyCells = findEmptyCells();
     // whether place stone or not for each empty cell
     for (var emptyCell of emptyCells) {
         var inx = emptyCell[0];
@@ -216,12 +211,12 @@ function canPlace() {
             }
         }
     }
-
     return false;
 }
 
 function passCheck() {
     var placeFlag = canPlace();
+    if (findEmptyCells().length == 0) return;
     if (!placeFlag) {
         passCount ++;
         var playerColor = colorOfTurn == 1 ? "黒" : "白";
