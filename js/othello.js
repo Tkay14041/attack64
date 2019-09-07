@@ -48,7 +48,6 @@ function initialize(ctx){
     drawStones(ctx);
 }
 
-
 // draw stones on the board
 function drawStones(ctx){
     for (var i = 1; i < 10; i++) {
@@ -178,7 +177,7 @@ function checkGameOver() {
     }
 }
 
-function findEmptyCells() {
+function getEmptyCells() {
     var emptyCells = [];
     for (i = 1; i < 9; i++) {
         for (j = 1; j < 9; j++) {
@@ -193,7 +192,7 @@ function findEmptyCells() {
 
 function canPlace() {
     var oppositeColor = 3 - colorOfTurn;
-    var emptyCells = findEmptyCells();
+    var emptyCells = getEmptyCells();
     // whether place stone or not for each empty cell
     for (var emptyCell of emptyCells) {
         var inx = emptyCell[0];
@@ -215,9 +214,8 @@ function canPlace() {
 }
 
 function passCheck() {
-    var placeFlag = canPlace();
-    if (findEmptyCells().length == 0) return;
-    if (!placeFlag) {
+    if (getEmptyCells().length == 0) return;
+    if (!canPlace()) {
         passCount ++;
         var playerColor = colorOfTurn == 1 ? "黒" : "白";
         var alertFunc = function() {
