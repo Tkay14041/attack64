@@ -24,11 +24,12 @@ onload = function(){
                 fixCoordinate(canvas);
                 flipStones(inx,iny);
                 drawStones(ctx);
-                checkGameOver();
                 // TODO: 次のターンのプレイヤーが石を置けるかチェック
                     // 置ければpassを0にリセット&continue, 置けなければpass++
                         // pass == 1 → さらにturnColorチェンジ
                         // pass == 2 → gameOver
+                passCheck()
+                checkGameOver();
                 },
                 false);
     initialize(ctx);
@@ -156,7 +157,7 @@ function checkGameOver() {
     var stones = countStones();
     console.log(stones['black'], stones['white'], stones['empty']);
 
-    if (stones['empty'] == 36) {
+    if (stones['empty'] == 36 || passCount == 2) {
         var winMessage;
         if (stones['black'] < stones['white']) {
             winMessage = '白の勝ちです。';
@@ -217,4 +218,18 @@ function canPlace() {
     }
 
     return false;
+}
+
+function passCheck() {
+    var placeFlag = canPlace();
+    if (!placeFlag) {
+        passCount ++;
+        var playerColor = colorOfTurn == 1 ? "黒" : "白";
+        var alertFunc = function() {
+            alert(playerColor + 'は石を置けません\nパスします。');
+        }
+        setTimeout(alertFunc, 500);
+        var oppositeColor = 3 - colorOfTurn;
+        colorOfTurn = oppositeColor;
+    }
 }
