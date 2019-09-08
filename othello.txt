@@ -39,13 +39,20 @@ Done if 全マスチェックでおけるかおけないか（click)
             終わり
 
 
-TODO: Attack64, Refactoring
-・oppositeColorを共通化したい
-・
-
 attackチャンス
 ・使える条件
     各プレイヤー1回
     offはボタンを隠す
-    どの状態で使える？
-    ターンを消費する？
+    どの状態で使える？→残り15〜10くらい？
+    ターンを消費する
+
+Done ・canvasのEventをRemove
+・Attackの機能を実装
+    ・クリックしたポイントにある石を削除（配列の値を0にして描画を背景色に？）
+    ・ターンチェンジ
+    ・Attackが終了したらcanvasのEventを復活
+
+
+refactor
+    ・ファイルを分割する
+    

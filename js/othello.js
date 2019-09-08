@@ -28,12 +28,24 @@ window.onload = function(){
         checkGameOver();
         }
 
+    var attackEvent = function(event) {
+        mouseX = event.pageX;
+        mouseY = event.pageY;
+        fixCoordinate(canvas);
+
+    }
+
     canvas.addEventListener('click', canvasEvent, false);
     initialize(ctx);
 
     var attackBtn = document.getElementById('attack-btn');
     attackBtn.addEventListener('click', function() {
         canvas.removeEventListener('click', canvasEvent, false);
+        // TODO: 石の削除
+
+        var oppositeColor = 3 - colorOfTurn;
+        colorOfTurn = oppositeColor;
+        canvas.addEventListener('click', canvasEvent, false);
     }, false);
 };
 
@@ -223,6 +235,7 @@ function canPlace() {
 
 function passCheck() {
     if (getEmptyCells().length == 0) return;
+    if (countStones()['black'] == 0 || countStones()['white'] == 0) return;
     if (!canPlace()) {
         passCount ++;
         var playerColor = colorOfTurn == 1 ? "黒" : "白";
@@ -233,4 +246,19 @@ function passCheck() {
         var oppositeColor = 3 - colorOfTurn;
         colorOfTurn = oppositeColor;
     }
+}
+
+// TODO: finish implement
+function deleteStone(ctx, inx, iny) {
+    if (point[inx][iny] != 0) {
+        point[inx][iny] = 0;
+    }
+    ctx.beginPath();
+    var centerX = 40 + inx * 80;
+    var centerY = 40 + iny * 80;
+    var radius = 35;
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.fill();
 }
