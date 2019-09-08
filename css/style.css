@@ -4,7 +4,64 @@ body {
     padding: 50px 0px;
    }
    
-   #canvas {
+#canvas {
     background-color: #006600;
     border: 1px solid black;
    }
+
+/* ここはコピーしなくてOK　*/
+.container {
+    font-family: "Yu Gothic", YuGothic, Verdana, 'Hiragino Kaku Gothic ProN','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, sans-serif;
+    text-align: center;
+    padding-top: 40px;
+  }
+  
+  
+  /* ここから下がボタンのCSS　*/
+  .btn-animation-02 {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    background-color: #9ec34b;
+    border: 2px solid #9ec34b;
+    font-size: 16px;
+    color: #9ec34b;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 24px;
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .btn-animation-02 span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .btn-animation-02::before,
+  .btn-animation-02::after {
+    content: "";
+    display: block;
+    background-color: #FFF;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    transition: .2s;
+  }
+  .btn-animation-02::before {
+    left: 0;
+  }
+  .btn-animation-02::after {
+    right: 0;
+  }
+  
+  .btn-animation-02:hover:before,
+  .btn-animation-02:hover:after {
+    width: 0;
+    background-color: #FFF;
+  }
+  
+  .btn-animation-02:hover {
+    color: #FFF;
+  }

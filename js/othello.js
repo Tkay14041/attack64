@@ -1,3 +1,5 @@
+"use strict";
+
 var mouseX;
 var mouseY;
 // variables for the array
@@ -12,21 +14,27 @@ for(var i = 0; i < 10; i++){
 }
 var passCount = 0;
 
-onload = function(){
+window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+    
+    var canvasEvent = function(event) {
+        mouseX = event.pageX;
+        mouseY = event.pageY;
+        fixCoordinate(canvas);
+        flipStones(inx,iny);
+        drawStones(ctx);
+        passCheck()
+        checkGameOver();
+        }
 
-    canvas.addEventListener('click',function(event){
-                mouseX = event.pageX;
-                mouseY = event.pageY;
-                fixCoordinate(canvas);
-                flipStones(inx,iny);
-                drawStones(ctx);
-                passCheck()
-                checkGameOver();
-                },
-                false);
+    canvas.addEventListener('click', canvasEvent, false);
     initialize(ctx);
+
+    var attackBtn = document.getElementById('attack-btn');
+    attackBtn.addEventListener('click', function() {
+        canvas.removeEventListener('click', canvasEvent, false);
+    }, false);
 };
 
 // initialize the board
@@ -106,7 +114,7 @@ function flipStones(inx,iny){
 
 // fix the coordinate to make the left top point of canvas the origin
 function fixCoordinate(canvas){
-    rect = canvas.getBoundingClientRect();
+    var rect = canvas.getBoundingClientRect();
     mouseX = mouseX - rect.left;
     mouseY = mouseY - rect.top;
 
@@ -179,8 +187,8 @@ function checkGameOver() {
 
 function getEmptyCells() {
     var emptyCells = [];
-    for (i = 1; i < 9; i++) {
-        for (j = 1; j < 9; j++) {
+    for (var i = 1; i < 9; i++) {
+        for (var j = 1; j < 9; j++) {
             if (point[i][j] == 0) {
                 var emptyCell = [i, j];
                 emptyCells.push(emptyCell);
