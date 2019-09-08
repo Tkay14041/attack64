@@ -42,3 +42,10 @@ Done if 全マスチェックでおけるかおけないか（click)
 TODO: Attack64, Refactoring
 ・oppositeColorを共通化したい
 ・
+
+attackチャンス
+・使える条件
+    各プレイヤー1回
+    offはボタンを隠す
+    どの状態で使える？
+    ターンを消費する？
