@@ -13,41 +13,63 @@ for(var i = 0; i < 10; i++){
     point[i] = [0,0,0,0,0,0,0,0,0,0];
 }
 var passCount = 0;
+// chance of attack button
+var attackBlack = true;
+var attackWhite = true;
+
+var canvasEvent;
+var attackEvent;
 
 window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-    
-    var canvasEvent = function(event) {
+
+    var turnText = document.getElementById('turn-text');
+    turnText.textContent = "黒のターンです";
+
+    canvasEvent = function(event) {
+        console.log(colorOfTurn);
         mouseX = event.pageX;
         mouseY = event.pageY;
         fixCoordinate(canvas);
         flipStones(inx,iny);
         drawStones(ctx);
+        setTrunText(turnText);
         passCheck()
         checkGameOver();
         }
 
-    var attackEvent = function(event) {
+    attackEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
         fixCoordinate(canvas);
         deleteStone(ctx, inx, iny);
+        setTrunText(turnText);
     }
 
-    canvas.addEventListener('click', canvasEvent, false);
+    canvas.addEventListener('click', canvasEvent, {once:false});
     initialize(ctx);
 
     var attackBtn = document.getElementById('attack-btn');
     attackBtn.addEventListener('click', function() {
-        canvas.removeEventListener('click', canvasEvent, false);
-        // TODO: 石の削除
-        canvas.addEventListener('click', attackEvent, false);
-        var oppositeColor = 3 - colorOfTurn;
-        colorOfTurn = oppositeColor;
-        canvas.addEventListener('click', canvasEvent, false);
+        if (colorOfTurn == 1 && attackBlack) {
+            canvas.removeEventListener('click', canvasEvent, {once:false});
+            alert('黒のAttack!');
+            canvas.addEventListener('click', attackEvent, {once:false});
+        } else if (colorOfTurn == 2 && attackWhite) {
+            canvas.removeEventListener('click', canvasEvent, {once:false});
+            alert('白のAttack!');
+            canvas.addEventListener('click', attackEvent, {once:false});
+        } else {
+            alert('Attackはもう使えません…');
+        }
     }, false);
 };
+
+function changeTurn() {
+    var oppositeColor = 3 - colorOfTurn;
+    colorOfTurn = oppositeColor;
+}
 
 // initialize the board
 function initialize(ctx){
@@ -66,6 +88,16 @@ function initialize(ctx){
     point[4][4] = 2;
     point[5][5] = 2;
     drawStones(ctx);
+}
+
+function setTrunText(turnText) {
+    var color;
+    if (colorOfTurn == 1) {
+        color = "黒";
+    } else {
+        color = "白";
+    }
+    turnText.textContent=color + "のターンです";
 }
 
 // draw stones on the board
@@ -120,7 +152,7 @@ function flipStones(inx,iny){
     if (flag) {
         passCount = 0;
         point[inx][iny] = colorOfTurn;
-        colorOfTurn = oppositeColor;
+        changeTurn();
     }
 }
 
@@ -243,16 +275,20 @@ function passCheck() {
             alert(playerColor + 'は石を置けません\nパスします。');
         }
         setTimeout(alertFunc, 500);
-        var oppositeColor = 3 - colorOfTurn;
-        colorOfTurn = oppositeColor;
+        changeTurn();
     }
 }
 
-// TODO: finish implement
 function deleteStone(ctx, inx, iny) {
-    if (point[inx][iny] != 0) {
-        point[inx][iny] = 0;
+    if (point[inx][iny] == 0) return;
+    
+    if (colorOfTurn == 1) {
+        attackBlack = false;
+    } else if (colorOfTurn == 2) {
+        attackWhite = false;
     }
+
+    point[inx][iny] = 0;
     ctx.beginPath();
     var startX = (inx - 1) * 80 + 1;
     var startY = (iny - 1) * 80 + 1;
@@ -261,4 +297,7 @@ function deleteStone(ctx, inx, iny) {
     ctx.strokeStyle = '#006600';
     ctx.fillStyle = '#006600';
     ctx.fill();
+    canvas.removeEventListener('click', attackEvent, {once:false});
+    changeTurn();
+    canvas.addEventListener('click', canvasEvent, {once:false});
 }

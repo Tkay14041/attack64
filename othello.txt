@@ -41,10 +41,11 @@ Done if 全マスチェックでおけるかおけないか（click)
 
 attackチャンス
 ・使える条件
-    各プレイヤー1回
-    offはボタンを隠す
+    Done: 各プレイヤー1回
+    Done: offはボタンを隠す
     どの状態で使える？→残り15〜10くらい？
-    ターンを消費する
+    Done: ターンを消費する
+
 
 Done ・canvasのEventをRemove
 ・Attackの機能を実装
