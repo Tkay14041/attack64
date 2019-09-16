@@ -1,60 +1,105 @@
 body {
-    background-color: #696969;
-    text-align: center;
-    padding: 50px 0px;
-   }
-   
+  background:
+    linear-gradient(
+      0deg,
+      rgba(139, 126, 74, 0.8),
+      rgba(168, 157, 95, 0.6) 10%,
+      rgba(168, 157, 95, 0.2) 90%,
+      rgba(139, 126, 74, 0.8)
+    ),
+    linear-gradient(
+      90deg,
+      #f9daa4,
+      #f9daa4 25%,
+      #cea660 25%,
+      #cea660 50%,
+      #ddba78 50%,
+      #ddba78 75%,
+      #c69f5a 75%,
+      #c69f5a
+    );
+  background-size: 4px 20px;
+  text-align: center;
+  padding: 50px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
 #canvas {
-    background-color: #006600;
-    border: 1px solid black;
-    float: left;
-    margin-left: 100px;
-   }
+  background-color: #006600;
+  border: 15px solid black;
+  border-radius: 25px;
+  margin-bottom: 50px;
+}
 
-/* ここはコピーしなくてOK　*/
 .container {
-    font-family: "Yu Gothic", YuGothic, Verdana, 'Hiragino Kaku Gothic ProN','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, sans-serif;
-    text-align: center;
-    padding-top: 40px;
-    display: inline-block;
-  }
-  
-  
-  /* ここから下がボタンのCSS　*/
-  .btn-animation-02 {
-    display: inline-block;
-    width: 200px;
-    text-align: center;
-    background-color: #9ec34b;
-    border: 2px solid #9ec34b;
-    font-size: 16px;
-    color: #9ec34b;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 10px 24px;
-    border-radius: 4px;
-    position: relative;
-  }
+  font-family: "Yu Gothic", YuGothic, Verdana, 'Hiragino Kaku Gothic ProN','Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', 'メイリオ', Meiryo, sans-serif;
+  text-align: center;
+  padding-top: 40px;
+  border: 5px solid #573216; 
+  border-radius: 5px;
+  display: inline-block;
+  height: 450px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(208, 147, 82, 0.6),
+      rgba(192, 134, 70, 0.6) 60%,
+      rgba(208, 147, 82, 0.6)
+    ),
+    repeating-radial-gradient(
+      ellipse at 60% 500%,
+      #c08646,
+      #c08646 0.2%,
+      #d09352 0.6%,
+      #d09352 1%
+    );
+}
 
-  .btn-animation-02 span {
-    position: relative;
-    z-index: 1;
-  }
+h1 {
+  font-size: 40px;
+}
+.container > p {
+  font-size: 26px;
+}
 
-  .btn-animation-02::before,
-  .btn-animation-02::after {
-    content: "";
-    display: block;
-    background-color: #FFF;
-    width: 50%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    transition: .2s;
-  }
-  .btn-animation-02::before {
-    left: 0;
-  }
-  .btn-animation-02::after {
-    right: 0;
-  }
+.btn-animation-02 {
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  background-color: #573216;
+  border: 3px solid #573216; 
+  font-size: 16px;
+  color: #573216;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 4px;
+  position: relative;
+  margin: 0px 30px;
+}
+
+.btn-animation-02 span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn-animation-02::before,
+.btn-animation-02::after {
+  content: "";
+  display: block;
+  background-color: #FFF;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: .2s;
+}
+.btn-animation-02::before {
+  left: 0;
+}
+.btn-animation-02::after {
+  right: 0;
+}
