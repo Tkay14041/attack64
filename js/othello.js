@@ -20,6 +20,8 @@ var attackWhite = true;
 var canvasEvent;
 var attackEvent;
 
+var isHalfOccupied;
+
 window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
@@ -32,6 +34,8 @@ window.onload = function(){
     var whiteCount = document.getElementById('white-count');
     whiteCount.textContent = 2;
 
+    
+
     canvasEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
@@ -42,7 +46,11 @@ window.onload = function(){
         showStoneCount(blackCount, whiteCount);
         passCheck()
         checkGameOver();
+        checkHalfOccupied();
+        if (isHalfOccupied) {
+            document.getElementById('button').disabled = false;
         }
+    }
 
     attackEvent = function(event) {
         mouseX = event.pageX;
@@ -58,15 +66,15 @@ window.onload = function(){
 
     var attackBtn = document.getElementById('attack-btn');
     attackBtn.addEventListener('click', function() {
-        if (colorOfTurn == 1 && attackBlack && isHalfOccupied()) {
+        if (colorOfTurn == 1 && attackBlack && isHalfOccupied) {
             canvas.removeEventListener('click', canvasEvent, {once:false});
             alert('黒のAttack!');
             canvas.addEventListener('click', attackEvent, {once:false});
-        } else if (colorOfTurn == 2 && attackWhite && isHalfOccupied()) {
+        } else if (colorOfTurn == 2 && attackWhite && isHalfOccupied) {
             canvas.removeEventListener('click', canvasEvent, {once:false});
             alert('白のAttack!');
             canvas.addEventListener('click', attackEvent, {once:false});
-        } else if (!isHalfOccupied()) {
+        } else if (!isHalfOccupied) {
             alert('盤面が半分埋まるまでAttackできません');
         } else {
             alert('Attackはもう使えません…');
@@ -77,11 +85,6 @@ window.onload = function(){
 function changeTurn() {
     var oppositeColor = 3 - colorOfTurn;
     colorOfTurn = oppositeColor;
-}
-
-function showStoneCount(blackCount, whiteCount) {
-    blackCount.textContent = countStones()['black'];
-    whiteCount.textContent = countStones()['white'];
 }
 
 // initialize the board
@@ -111,6 +114,11 @@ function setTrunText(turnText) {
         color = "白";
     }
     turnText.textContent = color + "のターンです";
+}
+
+function showStoneCount(blackCount, whiteCount) {
+    blackCount.textContent = countStones()['black'];
+    whiteCount.textContent = countStones()['white'];
 }
 
 // draw stones on the board
@@ -292,8 +300,10 @@ function passCheck() {
     }
 }
 
-function isHalfOccupied() {
-    return countStones()['empty'] < 68;
+function checkHalfOccupied() {
+    if (countStones()['empty'] == 68) {
+        isHalfOccupied = true;
+    } 
 }
 
 function execAttack(ctx, inx, iny) {

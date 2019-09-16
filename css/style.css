@@ -35,12 +35,12 @@ body {
     border-radius: 4px;
     position: relative;
   }
-  
+
   .btn-animation-02 span {
     position: relative;
     z-index: 1;
   }
-  
+
   .btn-animation-02::before,
   .btn-animation-02::after {
     content: "";
@@ -57,14 +57,4 @@ body {
   }
   .btn-animation-02::after {
     right: 0;
-  }
-  
-  .btn-animation-02:hover:before,
-  .btn-animation-02:hover:after {
-    width: 0;
-    background-color: #FFF;
-  }
-  
-  .btn-animation-02:hover {
-    color: #FFF;
   }
