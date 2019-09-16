@@ -32,7 +32,7 @@ window.onload = function(){
         mouseX = event.pageX;
         mouseY = event.pageY;
         fixCoordinate(canvas);
-
+        deleteStone(ctx, inx, iny);
     }
 
     canvas.addEventListener('click', canvasEvent, false);
@@ -42,7 +42,7 @@ window.onload = function(){
     attackBtn.addEventListener('click', function() {
         canvas.removeEventListener('click', canvasEvent, false);
         // TODO: 石の削除
-
+        canvas.addEventListener('click', attackEvent, false);
         var oppositeColor = 3 - colorOfTurn;
         colorOfTurn = oppositeColor;
         canvas.addEventListener('click', canvasEvent, false);
@@ -254,11 +254,11 @@ function deleteStone(ctx, inx, iny) {
         point[inx][iny] = 0;
     }
     ctx.beginPath();
-    var centerX = 40 + inx * 80;
-    var centerY = 40 + iny * 80;
-    var radius = 35;
-    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
+    var startX = (inx - 1) * 80 + 1;
+    var startY = (iny - 1) * 80 + 1;
+    var side = 78;
+    ctx.rect(startX, startY, side, side);
+    ctx.strokeStyle = '#006600';
+    ctx.fillStyle = '#006600';
     ctx.fill();
 }
