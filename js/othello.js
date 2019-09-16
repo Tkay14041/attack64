@@ -28,7 +28,6 @@ window.onload = function(){
     turnText.textContent = "黒のターンです";
 
     canvasEvent = function(event) {
-        console.log(colorOfTurn);
         mouseX = event.pageX;
         mouseY = event.pageY;
         fixCoordinate(canvas);
