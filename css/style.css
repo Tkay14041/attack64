@@ -25,6 +25,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-around;
+  overflow: hidden;
 }
 
 #canvas {
