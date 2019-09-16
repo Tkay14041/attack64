@@ -43,7 +43,7 @@ window.onload = function(){
         mouseX = event.pageX;
         mouseY = event.pageY;
         fixCoordinate(canvas);
-        deleteStone(ctx, inx, iny);
+        execAttack(ctx, inx, iny);
         setTrunText(turnText);
     }
 
@@ -279,7 +279,7 @@ function passCheck() {
     }
 }
 
-function deleteStone(ctx, inx, iny) {
+function execAttack(ctx, inx, iny) {
     if (point[inx][iny] == 0) return;
     
     if (colorOfTurn == 1) {
@@ -289,6 +289,14 @@ function deleteStone(ctx, inx, iny) {
     }
 
     point[inx][iny] = 0;
+    deleteStone(ctx, inx, iny);
+
+    canvas.removeEventListener('click', attackEvent, {once:false});
+    changeTurn();
+    canvas.addEventListener('click', canvasEvent, {once:false});
+}
+
+function deleteStone(ctx, inx, iny) {
     ctx.beginPath();
     var startX = (inx - 1) * 80 + 1;
     var startY = (iny - 1) * 80 + 1;
@@ -297,7 +305,4 @@ function deleteStone(ctx, inx, iny) {
     ctx.strokeStyle = '#006600';
     ctx.fillStyle = '#006600';
     ctx.fill();
-    canvas.removeEventListener('click', attackEvent, {once:false});
-    changeTurn();
-    canvas.addEventListener('click', canvasEvent, {once:false});
 }
