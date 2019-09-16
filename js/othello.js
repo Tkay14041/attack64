@@ -51,14 +51,16 @@ window.onload = function(){
 
     var attackBtn = document.getElementById('attack-btn');
     attackBtn.addEventListener('click', function() {
-        if (colorOfTurn == 1 && attackBlack) {
+        if (colorOfTurn == 1 && attackBlack && isHalfOccupied()) {
             canvas.removeEventListener('click', canvasEvent, {once:false});
             alert('黒のAttack!');
             canvas.addEventListener('click', attackEvent, {once:false});
-        } else if (colorOfTurn == 2 && attackWhite) {
+        } else if (colorOfTurn == 2 && attackWhite && isHalfOccupied()) {
             canvas.removeEventListener('click', canvasEvent, {once:false});
             alert('白のAttack!');
             canvas.addEventListener('click', attackEvent, {once:false});
+        } else if (!isHalfOccupied()) {
+            alert('盤面が半分埋まるまでAttackできません');
         } else {
             alert('Attackはもう使えません…');
         }
@@ -276,6 +278,10 @@ function passCheck() {
         setTimeout(alertFunc, 500);
         changeTurn();
     }
+}
+
+function isHalfOccupied() {
+    return countStones()['empty'] < 68;
 }
 
 function execAttack(ctx, inx, iny) {
