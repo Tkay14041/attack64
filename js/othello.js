@@ -27,6 +27,11 @@ window.onload = function(){
     var turnText = document.getElementById('turn-text');
     turnText.textContent = "黒のターンです";
 
+    var blackCount = document.getElementById('black-count');
+    blackCount.textContent = 2;
+    var whiteCount = document.getElementById('white-count');
+    whiteCount.textContent = 2;
+
     canvasEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
@@ -34,6 +39,7 @@ window.onload = function(){
         flipStones(inx,iny);
         drawStones(ctx);
         setTrunText(turnText);
+        showStoneCount(blackCount, whiteCount);
         passCheck()
         checkGameOver();
         }
@@ -44,6 +50,7 @@ window.onload = function(){
         fixCoordinate(canvas);
         execAttack(ctx, inx, iny);
         setTrunText(turnText);
+        showStoneCount(blackCount, whiteCount);
     }
 
     canvas.addEventListener('click', canvasEvent, {once:false});
@@ -72,6 +79,11 @@ function changeTurn() {
     colorOfTurn = oppositeColor;
 }
 
+function showStoneCount(blackCount, whiteCount) {
+    blackCount.textContent = countStones()['black'];
+    whiteCount.textContent = countStones()['white'];
+}
+
 // initialize the board
 function initialize(ctx){
     ctx.beginPath();
@@ -98,7 +110,7 @@ function setTrunText(turnText) {
     } else {
         color = "白";
     }
-    turnText.textContent=color + "のターンです";
+    turnText.textContent = color + "のターンです";
 }
 
 // draw stones on the board
