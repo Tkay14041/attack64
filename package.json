@@ -1,0 +1,23 @@
+{
+  "name": "attack64",
+  "version": "1.0.0",
+  "description": "オセロに、アタック25の**アタックチャンス**を加えたゲームです。   盤面が半分以上埋まると、各プレイヤーにつき一回だけ、盤面の石を1つ消すことが出来ます。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tkay14041/attack64.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tkay14041/attack64/issues"
+  },
+  "homepage": "https://github.com/Tkay14041/attack64#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
