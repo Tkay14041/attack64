@@ -27,12 +27,12 @@ var Othello = Othello || {
                 } else if (point[i][j] == 2) {
                     color = 'white';
                 }
-                Othello.fixStoneColor(ctx,i-1,j-1,color);
+                Othello.displayStone(ctx,i-1,j-1,color);
             }
         }
     },
 
-    fixStoneColor: function(ctx,inx,iny,color){
+    displayStone: function(ctx,inx,iny,color){
         if (color != 'black' && color != 'white') return;
         ctx.beginPath();
         var centerX = 40 + inx * 80;

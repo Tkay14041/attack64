@@ -47,4 +47,43 @@ var Common = Common || {
         var stones = {'empty':emptyCount, 'black':blackCount, 'white':whiteCount};
         return stones;
     },
+
+    // draw stones on the board
+    drawStones: function(ctx){
+        for (var i = 1; i < 10; i++) {
+            for (var j = 1; j < 10; j++) {
+                var color = '';
+                if (point[i][j] == 1) {
+                    color = 'black';
+                } else if (point[i][j] == 2) {
+                    color = 'white';
+                }
+                Common.displayStone(ctx,i-1,j-1,color);
+            }
+        }
+    },
+
+    displayStone: function(ctx,inx,iny,color){
+        if (color != 'black' && color != 'white') return;
+        Common.deleteStone(ctx,inx + 1,iny + 1);
+        ctx.beginPath();
+        var centerX = 40 + inx * 80;
+        var centerY = 40 + iny * 80;
+        var radius = 35;
+        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.fill();
+    },
+
+    deleteStone: function(ctx, inx, iny) {
+        ctx.beginPath();
+        var startX = (inx - 1) * 80 + 1;
+        var startY = (iny - 1) * 80 + 1;
+        var side = 78;
+        ctx.rect(startX, startY, side, side);
+        ctx.strokeStyle = '#006600';
+        ctx.fillStyle = '#006600';
+        ctx.fill();
+    }
 }

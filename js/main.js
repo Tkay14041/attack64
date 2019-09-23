@@ -39,7 +39,7 @@ window.onload = function(){
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
         Othello.flipStones(inx,iny);
-        Othello.drawStones(ctx);
+        Common.drawStones(ctx);
         Othello.setTrunText(turnText);
         Othello.showStoneCount(blackCount, whiteCount);
         Othello.passCheck()
@@ -96,5 +96,5 @@ function initialize(ctx){
     point[5][4] = 1;
     point[4][4] = 2;
     point[5][5] = 2;
-    Othello.drawStones(ctx);
+    Common.drawStones(ctx);
 }
