@@ -34,19 +34,17 @@ window.onload = function(){
     var whiteCount = document.getElementById('white-count');
     whiteCount.textContent = 2;
 
-    
-
     canvasEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
-        Othello.fixCoordinate(canvas);
+        Common.fixCoordinate(canvas);
         Othello.flipStones(inx,iny);
         Othello.drawStones(ctx);
         Othello.setTrunText(turnText);
         Othello.showStoneCount(blackCount, whiteCount);
         Othello.passCheck()
         Othello.checkGameOver();
-        Othello.checkHalfOccupied();
+        Attack.checkHalfOccupied();
         if (isHalfOccupied) {
             document.getElementById('button').disabled = false;
         }
@@ -55,8 +53,8 @@ window.onload = function(){
     attackEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
-        Othello.fixCoordinate(canvas);
-        Othello.execAttack(ctx, inx, iny);
+        Common.fixCoordinate(canvas);
+        Attack.execAttack(ctx, inx, iny);
         Othello.setTrunText(turnText);
         Othello.showStoneCount(blackCount, whiteCount);
     }
@@ -84,19 +82,19 @@ window.onload = function(){
 
 // initialize the board
 function initialize(ctx){
-  ctx.beginPath();
-  for (var i = 1; i < 8; i++) {
-      ctx.moveTo(0,i*80);
-      ctx.lineTo(640,i*80);
-      ctx.moveTo(i*80,0);
-      ctx.lineTo(i*80,640);
-  }
+    ctx.beginPath();
+    for (var i = 1; i < 8; i++) {
+        ctx.moveTo(0,i*80);
+        ctx.lineTo(640,i*80);
+        ctx.moveTo(i*80,0);
+        ctx.lineTo(i*80,640);
+    }
 
-  ctx.stroke();
+    ctx.stroke();
 
-  point[4][5] = 1;
-  point[5][4] = 1;
-  point[4][4] = 2;
-  point[5][5] = 2;
-  Othello.drawStones(ctx);
+    point[4][5] = 1;
+    point[5][4] = 1;
+    point[4][4] = 2;
+    point[5][5] = 2;
+    Othello.drawStones(ctx);
 }

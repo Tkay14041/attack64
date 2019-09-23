@@ -1,10 +1,6 @@
 "use strict";
 
 var Othello = Othello || {
-    changeTurn: function() {
-        var oppositeColor = 3 - colorOfTurn;
-        colorOfTurn = oppositeColor;
-    },
 
     setTrunText: function(turnText) {
         var color;
@@ -17,8 +13,8 @@ var Othello = Othello || {
     },
 
     showStoneCount: function(blackCount, whiteCount) {
-        blackCount.textContent = Othello.countStones()['black'];
-        whiteCount.textContent = Othello.countStones()['white'];
+        blackCount.textContent = Common.countStones()['black'];
+        whiteCount.textContent = Common.countStones()['white'];
     },
     
     // draw stones on the board
@@ -73,53 +69,12 @@ var Othello = Othello || {
         if (flag) {
             passCount = 0;
             point[inx][iny] = colorOfTurn;
-            Othello.changeTurn();
+            Common.changeTurn();
         }
-    },
-
-    // fix the coordinate to make the left top point of canvas the origin
-    fixCoordinate: function(canvas){
-        var rect = canvas.getBoundingClientRect();
-        mouseX = mouseX - rect.left;
-        mouseY = mouseY - rect.top;
-    
-        if (mouseX < 0 || 640 < mouseX) {
-            return;
-        } else if (mouseY < 0 || 640 < mouseY) {
-            return;
-        }
-    
-        inx = Math.floor(mouseX / 80) + 1;
-        iny = Math.floor(mouseY / 80) + 1;
-    },
-
-    countStones: function() {
-        var emptyCount = 0;
-        var blackCount = 0;
-        var whiteCount = 0;
-    
-        for (var i = 0; i < 10; i++) {
-            for (var j = 0; j < 10; j++) {
-                switch (point[i][j]) {
-                    case 0:
-                        emptyCount++;
-                        break;
-                    case 1:
-                        blackCount++;
-                        break;
-                    case 2:
-                        whiteCount++;
-                        break;
-                }
-            }
-        }
-    
-        var stones = {'empty':emptyCount, 'black':blackCount, 'white':whiteCount};
-        return stones;
     },
 
     checkGameOver: function() {
-        var stones = Othello.countStones();
+        var stones = Common.countStones();
     
         if (stones['empty'] == 36 || passCount == 2) {
             var winMessage;
@@ -188,7 +143,7 @@ var Othello = Othello || {
 
     passCheck: function() {
         if (Othello.getEmptyCells().length == 0) return;
-        if (Othello.countStones()['black'] == 0 || Othello.countStones()['white'] == 0) return;
+        if (Common.countStones()['black'] == 0 || Common.countStones()['white'] == 0) return;
         if (!Othello.canPlace()) {
             passCount ++;
             var playerColor = colorOfTurn == 1 ? "黒" : "白";
@@ -196,41 +151,7 @@ var Othello = Othello || {
                 alert(playerColor + 'は石を置けません\nパスします。');
             }
             setTimeout(alertFunc, 500);
-            Othello.changeTurn();
+            Common.changeTurn();
         }
-    },
-
-    checkHalfOccupied: function() {
-        if (Othello.countStones()['empty'] == 68) {
-            isHalfOccupied = true;
-        } 
-    },
-
-    execAttack: function(ctx, inx, iny) {
-        if (point[inx][iny] == 0) return;
-        
-        if (colorOfTurn == 1) {
-            attackBlack = false;
-        } else if (colorOfTurn == 2) {
-            attackWhite = false;
-        }
-    
-        point[inx][iny] = 0;
-        Othello.deleteStone(ctx, inx, iny);
-    
-        canvas.removeEventListener('click', attackEvent, {once:false});
-        Othello.changeTurn();
-        canvas.addEventListener('click', canvasEvent, {once:false});
-    },
-
-    deleteStone: function(ctx, inx, iny) {
-        ctx.beginPath();
-        var startX = (inx - 1) * 80 + 1;
-        var startY = (iny - 1) * 80 + 1;
-        var side = 78;
-        ctx.rect(startX, startY, side, side);
-        ctx.strokeStyle = '#006600';
-        ctx.fillStyle = '#006600';
-        ctx.fill();
     }
 };
