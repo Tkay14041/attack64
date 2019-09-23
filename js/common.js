@@ -2,6 +2,21 @@
 
 var Common = Common || {
 
+    setTrunText: function(turnText) {
+        var color;
+        if (colorOfTurn == 1) {
+            color = "黒";
+        } else {
+            color = "白";
+        }
+        turnText.textContent = color + "のターンです";
+    },
+
+    showStoneCount: function(blackCount, whiteCount) {
+        blackCount.textContent = Common.countStones()['black'];
+        whiteCount.textContent = Common.countStones()['white'];
+    },
+    
     changeTurn: function() {
         var oppositeColor = 3 - colorOfTurn;
         colorOfTurn = oppositeColor;

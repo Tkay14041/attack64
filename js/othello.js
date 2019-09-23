@@ -2,21 +2,6 @@
 
 var Othello = Othello || {
 
-    setTrunText: function(turnText) {
-        var color;
-        if (colorOfTurn == 1) {
-            color = "黒";
-        } else {
-            color = "白";
-        }
-        turnText.textContent = color + "のターンです";
-    },
-
-    showStoneCount: function(blackCount, whiteCount) {
-        blackCount.textContent = Common.countStones()['black'];
-        whiteCount.textContent = Common.countStones()['white'];
-    },
-
     // place and flip the stones
     flipStones: function (inx,iny){
         // fliped or not

@@ -40,8 +40,8 @@ window.onload = function(){
         Common.fixCoordinate(canvas);
         Othello.flipStones(inx,iny);
         Common.drawStones(ctx);
-        Othello.setTrunText(turnText);
-        Othello.showStoneCount(blackCount, whiteCount);
+        Common.setTrunText(turnText);
+        Common.showStoneCount(blackCount, whiteCount);
         Othello.passCheck()
         Othello.checkGameOver();
         Attack.checkHalfOccupied();
@@ -55,8 +55,8 @@ window.onload = function(){
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
         Attack.execAttack(ctx, inx, iny);
-        Othello.setTrunText(turnText);
-        Othello.showStoneCount(blackCount, whiteCount);
+        Common.setTrunText(turnText);
+        Common.showStoneCount(blackCount, whiteCount);
     }
 
     canvas.addEventListener('click', canvasEvent, {once:false});
