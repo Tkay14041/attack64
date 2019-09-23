@@ -58,17 +58,17 @@ var Common = Common || {
                 } else if (point[i][j] == 2) {
                     color = 'white';
                 }
-                Common.displayStone(ctx,i-1,j-1,color);
+                Common.displayStone(ctx, i, j, color);
             }
         }
     },
 
-    displayStone: function(ctx,inx,iny,color){
+    displayStone: function(ctx, inx, iny, color){
         if (color != 'black' && color != 'white') return;
-        Common.deleteStone(ctx,inx + 1,iny + 1);
+        Common.deleteStone(ctx,inx, iny);
         ctx.beginPath();
-        var centerX = 40 + inx * 80;
-        var centerY = 40 + iny * 80;
+        var centerX = 40 + (inx - 1) * 80;
+        var centerY = 40 + (iny - 1) * 80;
         var radius = 35;
         ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
         ctx.strokeStyle = color;

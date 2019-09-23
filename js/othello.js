@@ -16,33 +16,6 @@ var Othello = Othello || {
         blackCount.textContent = Common.countStones()['black'];
         whiteCount.textContent = Common.countStones()['white'];
     },
-    
-    // draw stones on the board
-    drawStones: function(ctx){
-        for (var i = 1; i < 10; i++) {
-            for (var j = 1; j < 10; j++) {
-                var color = '';
-                if (point[i][j] == 1) {
-                    color = 'black';
-                } else if (point[i][j] == 2) {
-                    color = 'white';
-                }
-                Othello.displayStone(ctx,i-1,j-1,color);
-            }
-        }
-    },
-
-    displayStone: function(ctx,inx,iny,color){
-        if (color != 'black' && color != 'white') return;
-        ctx.beginPath();
-        var centerX = 40 + inx * 80;
-        var centerY = 40 + iny * 80;
-        var radius = 35;
-        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color;
-        ctx.fill();
-    },
 
     // place and flip the stones
     flipStones: function (inx,iny){
