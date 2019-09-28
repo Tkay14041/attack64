@@ -99,5 +99,9 @@ var Common = Common || {
         ctx.strokeStyle = '#006600';
         ctx.fillStyle = '#006600';
         ctx.fill();
+    },
+
+    wait: function(delay) {
+        
     }
 }

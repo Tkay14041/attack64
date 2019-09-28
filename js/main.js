@@ -38,26 +38,32 @@ window.onload = function(){
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
-        var userPotentialCells = Othello.getPotentialCells();
-        if (!userPotentialCells.find(cell => (cell[0] === inx) && (cell[1] === iny))) {
-            return;
-        }
-        Othello.flipStones(inx,iny);　// 石が置けた時点でCPUのターン開始
-        Common.drawStones(ctx);
-        Common.setText(turnText, blackCount, whiteCount);
-        // cpu turn
-        if(!Othello.checkPass()) {
-            setTimeout(CPU.play, 500, ctx);
+        // player turn
+        if (!Othello.checkPass()) {
+            var userPotentialCells = Othello.getPotentialCells();
+            if (!userPotentialCells.find(cell => (cell[0] === inx) && (cell[1] === iny))) {
+                return;
+            }
+            Othello.flipStones(inx,iny);　// 石が置けた時点でCPUのターン開始
+            Common.drawStones(ctx);
         } else {
             Common.changeTurn();
         }
         Common.setText(turnText, blackCount, whiteCount);
+        // cpu turn
+        if(!Othello.checkPass()) {
+            setTimeout(CPU.execCPU, 500, ctx, turnText, blackCount, whiteCount);
+        } else {
+            Common.changeTurn();
+            Common.setText(turnText, blackCount, whiteCount);
 
-        Othello.checkGameOver();
-        Attack.checkHalfOccupied();
-        if (isHalfOccupied) {
-            document.getElementById('button').disabled = false;
+            Othello.checkGameOver();
+            Attack.checkHalfOccupied();
+            if (isHalfOccupied) {
+                document.getElementById('button').disabled = false;
+            }
         }
+        
     }
 
     attackEvent = function(event) {
