@@ -38,11 +38,21 @@ window.onload = function(){
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
-        Othello.flipStones(inx,iny);
+        var userPotentialCells = Othello.getPotentialCells();
+        if (!userPotentialCells.find(cell => (cell[0] === inx) && (cell[1] === iny))) {
+            return;
+        }
+        Othello.flipStones(inx,iny);　// 石が置けた時点でCPUのターン開始
         Common.drawStones(ctx);
-        Common.setTrunText(turnText);
-        Common.showStoneCount(blackCount, whiteCount);
-        Othello.passCheck()
+        Common.setText(turnText, blackCount, whiteCount);
+        // cpu turn
+        if(!Othello.checkPass()) {
+            setTimeout(CPU.play, 500, ctx);
+        } else {
+            Common.changeTurn();
+        }
+        Common.setText(turnText, blackCount, whiteCount);
+
         Othello.checkGameOver();
         Attack.checkHalfOccupied();
         if (isHalfOccupied) {
@@ -55,8 +65,7 @@ window.onload = function(){
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
         Attack.execAttack(ctx, inx, iny);
-        Common.setTrunText(turnText);
-        Common.showStoneCount(blackCount, whiteCount);
+        Common.setText(turnText, blackCount, whiteCount);
     }
 
     canvas.addEventListener('click', canvasEvent, {once:false});

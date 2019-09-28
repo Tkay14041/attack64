@@ -76,10 +76,13 @@ var Othello = Othello || {
         return emptyCells;
     },
 
-    canPlace: function() {
+    getPotentialCells: function() {
         var oppositeColor = 3 - colorOfTurn;
         var emptyCells = Othello.getEmptyCells();
         // whether place stone or not for each empty cell
+
+        // TODO: generate potential array
+        var potentialCells = [];
         for (var emptyCell of emptyCells) {
             var inx = emptyCell[0];
             var iny = emptyCell[1];
@@ -91,25 +94,26 @@ var Othello = Othello || {
                         n++;
                     }
                     if (n > 1 && point[inx + n * dx][iny + n * dy] == colorOfTurn) {
-                        return true;
+                        var potentialCell = [inx, iny];
+                        potentialCells.push(potentialCell);
                     }
                 }
             }
         }
-        return false;
+        return potentialCells;
     },
 
-    passCheck: function() {
+    checkPass: function() {
         if (Othello.getEmptyCells().length == 0) return;
         if (Common.countStones()['black'] == 0 || Common.countStones()['white'] == 0) return;
-        if (!Othello.canPlace()) {
+        if (!Othello.getPotentialCells().length) {
             passCount ++;
             var playerColor = colorOfTurn == 1 ? "黒" : "白";
             var alertFunc = function() {
                 alert(playerColor + 'は石を置けません\nパスします。');
             }
             setTimeout(alertFunc, 500);
-            Common.changeTurn();
+            return true;
         }
     }
 };

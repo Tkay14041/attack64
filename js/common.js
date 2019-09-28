@@ -2,7 +2,8 @@
 
 var Common = Common || {
 
-    setTrunText: function(turnText) {
+    setText: function(turnText, blackCount, whiteCount) {
+        // show turn text
         var color;
         if (colorOfTurn == 1) {
             color = "黒";
@@ -10,9 +11,7 @@ var Common = Common || {
             color = "白";
         }
         turnText.textContent = color + "のターンです";
-    },
-
-    showStoneCount: function(blackCount, whiteCount) {
+        // show stone count
         blackCount.textContent = Common.countStones()['black'];
         whiteCount.textContent = Common.countStones()['white'];
     },
