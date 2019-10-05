@@ -26,6 +26,13 @@ window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
 
+    var attackBtn = document.getElementById('attack-btn');
+    attackBtn.onmouseover = function() {
+        if (isHalfOccupied) {
+            document.getElementById('attack-btn-css').disabled = false;
+        }
+    };
+
     var turnText = document.getElementById('turn-text');
     turnText.textContent = "黒のターンです";
 
@@ -52,32 +59,27 @@ window.onload = function(){
         Common.setText(turnText, blackCount, whiteCount);
         // cpu turn
         if(!Othello.checkPass()) {
-            setTimeout(CPU.execCPU, 500, ctx, turnText, blackCount, whiteCount);
+            setTimeout(CPU.execCPU, 500, ctx, turnText, blackCount, whiteCount, canvas, attackBtn);
         } else {
             Common.changeTurn();
             Common.setText(turnText, blackCount, whiteCount);
 
-            Othello.checkGameOver();
+            Othello.checkGameOver(canvas, attackBtn);
             Attack.checkHalfOccupied();
-            if (isHalfOccupied) {
-                document.getElementById('button').disabled = false;
-            }
         }
-        
     }
 
     attackEvent = function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
-        Attack.execAttack(ctx, inx, iny);
+        Attack.execAttack(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn);
         Common.setText(turnText, blackCount, whiteCount);
     }
 
     canvas.addEventListener('click', canvasEvent, {once:false});
     initialize(ctx);
 
-    var attackBtn = document.getElementById('attack-btn');
     attackBtn.addEventListener('click', function() {
         if (colorOfTurn == 1 && attackBlack && isHalfOccupied) {
             canvas.removeEventListener('click', canvasEvent, {once:false});

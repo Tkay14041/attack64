@@ -1,0 +1,9 @@
+#attack-btn:hover:before,
+#attack-btn:hover:after {
+  width: 0;
+  background-color: #FFF;
+}
+
+#attack-btn:hover {
+  color: #FFF;
+}

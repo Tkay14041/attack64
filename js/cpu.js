@@ -10,13 +10,10 @@ var CPU = CPU || {
         Common.drawStones(ctx);
     },
 
-    execCPU: function(ctx, turnText, blackCount, whiteCount) {
+    execCPU: function(ctx, turnText, blackCount, whiteCount, canvas, attackBtn) {
         CPU.play(ctx);
         Common.setText(turnText, blackCount, whiteCount);
-        Othello.checkGameOver();
+        Othello.checkGameOver(canvas, attackBtn);
         Attack.checkHalfOccupied();
-        if (isHalfOccupied) {
-            document.getElementById('button').disabled = false;
-        }
-  }
+    }
 }

@@ -31,7 +31,7 @@ var Othello = Othello || {
         }
     },
 
-    checkGameOver: function() {
+    checkGameOver: function(canvas, attackBtn) {
         var stones = Common.countStones();
     
         if (stones['empty'] == 36 || passCount == 2) {
@@ -47,6 +47,10 @@ var Othello = Othello || {
                 alert('ゲーム終了です。\n' + winMessage);
             }
             setTimeout(alertFunc, 500);
+
+            // disable all, event
+            canvas.removeEventListener('click', canvasEvent, {once:false});
+            attackBtn.setAttribute('disabled', 'true');
             return;
         } 
         

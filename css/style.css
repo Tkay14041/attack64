@@ -66,13 +66,21 @@ h1 {
   font-size: 26px;
 }
 
-.btn-animation-02 {
-  display: inline-block;
+#attack-btn {
   width: 200px;
+  font-size: 24px;
+
+}
+
+#restart-btn {
+  font-size: 16px;
+}
+
+.btn-animation {
+  display: inline-block;
   text-align: center;
   background-color: #573216;
   border: 3px solid #573216; 
-  font-size: 16px;
   color: #573216;
   text-decoration: none;
   font-weight: bold;
@@ -82,13 +90,13 @@ h1 {
   margin: 0px 30px;
 }
 
-.btn-animation-02 span {
+.btn-animation span {
   position: relative;
   z-index: 1;
 }
 
-.btn-animation-02::before,
-.btn-animation-02::after {
+.btn-animation::before,
+.btn-animation::after {
   content: "";
   display: block;
   background-color: #FFF;
@@ -98,9 +106,19 @@ h1 {
   top: 0;
   transition: .2s;
 }
-.btn-animation-02::before {
+.btn-animation::before {
   left: 0;
 }
-.btn-animation-02::after {
+.btn-animation::after {
   right: 0;
+}
+
+#restart-btn:hover:before,
+#restart-btn:hover:after {
+  width: 0;
+  background-color: #FFF;
+}
+
+#restart-btn:hover {
+  color: #FFF;
 }
