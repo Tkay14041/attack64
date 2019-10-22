@@ -8,7 +8,7 @@ var Attack = Attack || {
         } 
     },
 
-    execAttack: function(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn) {
+    execAttack: async function(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn) {
         if (point[inx][iny] == 0) return;
         
         if (colorOfTurn == 1) {
@@ -23,14 +23,14 @@ var Attack = Attack || {
 
         Common.changeTurn();
         if(!Othello.checkPass()) {
-            setTimeout(CPU.execCPU, 500, ctx, turnText, blackCount, whiteCount, canvas, attackBtn);
+            await CPU.sleep(0.5);
+            CPU.play(ctx);
         } else {
             Common.changeTurn();
-            Common.setText(turnText, blackCount, whiteCount);
-
-            Othello.checkGameOver(canvas, attackBtn);
-            Attack.checkHalfOccupied();
         }
+        Common.setText(turnText, blackCount, whiteCount);
+        Othello.checkGameOver(canvas, attackBtn);
+        Attack.checkHalfOccupied();
 
         canvas.addEventListener('click', canvasEvent, {once:false});
     }

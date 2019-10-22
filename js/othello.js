@@ -94,7 +94,6 @@ var Othello = Othello || {
         // whether place stone or not for each empty cell
 
         var potentialCells = [];
-        // let potentialCells = new Set();
         for (var emptyCell of emptyCells) {
             var [inx, iny] = emptyCell;
             for (var dx = -1; dx <= 1; dx++) {
