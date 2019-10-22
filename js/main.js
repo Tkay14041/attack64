@@ -51,7 +51,9 @@ window.onload = function(){
             if (!userPotentialCells.find(cell => (cell[0] === inx) && (cell[1] === iny))) {
                 return;
             }
-            Othello.flipStones(inx,iny);　// 石が置けた時点でCPUのターン開始
+            Othello.flipStones(inx,iny);
+            // 石が置けた時点で内部的にはターンチェンジ
+            Common.changeTurn();
             Common.drawStones(ctx);
         } else {
             Common.changeTurn();
@@ -67,6 +69,8 @@ window.onload = function(){
             Othello.checkGameOver(canvas, attackBtn);
             Attack.checkHalfOccupied();
         }
+        // user's pass check
+        Othello.checkPass();
     }
 
     attackEvent = function(event) {

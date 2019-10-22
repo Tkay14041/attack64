@@ -2,32 +2,40 @@
 
 var Othello = Othello || {
 
-    // place and flip the stones
-    flipStones: function (inx,iny){
-        // fliped or not
-        var flag = false;
-        var oppositeColor = 3 - colorOfTurn;
-        if (point[inx][iny] != 0)　return;
+    // check stones which user can flip 
+    getFlippableStones: function (inx, iny) {
+        const flippableStones = [];
+        const oppositeColor = 3 - colorOfTurn;
+        if (point[inx][iny] !== 0) return;
         // 8 directions
-        for (var dx = -1; dx <= 1; dx++) {
-            for (var dy = -1; dy <= 1; dy++) {
-                if (dx == 0 && dy == 0)　continue;
-                var n = 1;
-                while (point[inx + n * dx][iny + n * dy] == oppositeColor) {
+        for (let dx = -1; dx <= 1; dx++) {
+            for (let dy = -1; dy <= 1; dy++) {
+                if (dx === 0 && dy === 0) continue;
+                let n = 1;
+                while (point[inx + n * dx][iny + n * dy] === oppositeColor) {
                     n++;
                 }
-                if (n > 1 && point[inx + n * dx][iny + n * dy] == colorOfTurn) {
-                    for (var i = 1; i <= n; i++) {
-                        point[inx + i * dx][iny + i * dy] = colorOfTurn;
+                if (n > 1 && point[inx + n * dx][iny + n * dy] === colorOfTurn) {
+                    for (let i = 1; i <= n; i++) {
+                        flippableStones.push([inx + i * dx, iny + i * dy]);
                     }
-                    flag = true;
                 }
             }
         }
-        if (flag) {
+        return flippableStones;
+    },
+
+    // place and flip the stones
+    flipStones: function (inx, iny){
+        // fliped or not
+        const flippableStones = Othello.getFlippableStones(inx, iny);
+        if (flippableStones.length !== 0) {
+            for (const flippableStone of flippableStones) {
+                const [x, y] = flippableStone;
+                point[x][y] = colorOfTurn;
+            }
             passCount = 0;
             point[inx][iny] = colorOfTurn;
-            Common.changeTurn();
         }
     },
 
@@ -85,11 +93,10 @@ var Othello = Othello || {
         var emptyCells = Othello.getEmptyCells();
         // whether place stone or not for each empty cell
 
-        // TODO: generate potential array
         var potentialCells = [];
+        // let potentialCells = new Set();
         for (var emptyCell of emptyCells) {
-            var inx = emptyCell[0];
-            var iny = emptyCell[1];
+            var [inx, iny] = emptyCell;
             for (var dx = -1; dx <= 1; dx++) {
                 for (var dy = -1; dy <= 1; dy++) {
                     if (dx == 0 && dy == 0)　continue;
@@ -108,8 +115,8 @@ var Othello = Othello || {
     },
 
     checkPass: function() {
-        if (Othello.getEmptyCells().length == 0) return;
-        if (Common.countStones()['black'] == 0 || Common.countStones()['white'] == 0) return;
+        if (Othello.getEmptyCells().length === 0) return;
+        if (Common.countStones()['black'] === 0 || Common.countStones()['white'] === 0) return;
         if (!Othello.getPotentialCells().length) {
             passCount ++;
             var playerColor = colorOfTurn == 1 ? "黒" : "白";
