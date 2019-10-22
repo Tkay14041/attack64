@@ -80,12 +80,25 @@ window.onload = function(){
         }
     }
 
-    attackEvent = function(event) {
+    attackEvent = async function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
         Attack.execAttack(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn);
+
+        Common.changeTurn();
+        if(!Othello.checkPass()) {
+            await CPU.sleep(0.5);
+            CPU.play(ctx);
+        } else {
+            Common.changeTurn();
+        }
         Common.setText(turnText, blackCount, whiteCount);
+        Othello.checkGameOver(canvas, attackBtn);
+        Attack.checkHalfOccupied();
+
+        canvas.removeEventListener('click', attackEvent, {once:false});
+        canvas.addEventListener('click', canvasEvent, {once:false});
     }
 
     canvas.addEventListener('click', canvasEvent, {once:false});

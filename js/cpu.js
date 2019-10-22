@@ -33,6 +33,41 @@ var CPU = CPU || {
         Common.drawStones(ctx);
     },
 
+    willAttack: function() {
+        let attackCells = [];
+        const attackPotentialCells = [
+            [1, 1], [1, 8], [8, 1], [8, 8],
+            [4, 4], [4, 5], [5, 4], [5, 5]
+        ];
+        for (const attackPotentialCell of attackPotentialCells) {
+            const [x, y] = attackPotentialCell;
+            if (point[x][y] !== 1) continue;
+
+            for (let dx = -1; dx <= 1; dx++) {
+                for (let dy = -1; dy <= 1; dy++) {
+                    if (dx === 0 && dy === 0) continue;
+                    let n = 1;
+                    while (point[x + n * dx][y + n * dy] === 2) {
+                        n++;
+                    }
+                    if (!(n > 1 && point[x + n * dx][y + n * dy] === 1)) {
+                        attackCells.push(attackPotentialCell);
+                    }
+                }
+            }
+        }
+        console.log(attackCells);
+        if (Common.countStones()['empty'] === 46
+            && Common.countStones()['black'] > Common.countStones()['white']
+            ) {
+
+        }
+    },
+
+    attack: function() {
+
+    },
+
     sleep: function(second) {
         return new Promise(resolve => {
             setTimeout(() => {
