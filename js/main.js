@@ -41,7 +41,7 @@ window.onload = function(){
     var whiteCount = document.getElementById('white-count');
     whiteCount.textContent = 2;
 
-    canvasEvent = function(event) {
+    canvasEvent = async function(event) {
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
@@ -60,17 +60,24 @@ window.onload = function(){
         }
         Common.setText(turnText, blackCount, whiteCount);
         // cpu turn
-        if(!Othello.checkPass()) {
-            setTimeout(CPU.execCPU, 500, ctx, turnText, blackCount, whiteCount, canvas, attackBtn);
-        } else {
-            Common.changeTurn();
+        let canUserPlace = false;
+        while(!canUserPlace) {
+            if(!Othello.checkPass()) {
+                await CPU.sleep(0.5);
+                CPU.play(ctx);
+            } else {
+                Common.changeTurn();
+            }
             Common.setText(turnText, blackCount, whiteCount);
-
             Othello.checkGameOver(canvas, attackBtn);
             Attack.checkHalfOccupied();
+            // user's pass check
+            if (!Othello.checkPass()) {
+                canUserPlace = true;
+            } else {
+                Common.changeTurn();
+            }
         }
-        // user's pass check
-        Othello.checkPass();
     }
 
     attackEvent = function(event) {

@@ -115,9 +115,9 @@ var Othello = Othello || {
     },
 
     checkPass: function() {
-        if (Othello.getEmptyCells().length === 0) return;
-        if (Common.countStones()['black'] === 0 || Common.countStones()['white'] === 0) return;
-        if (!Othello.getPotentialCells().length) {
+        if (Othello.getEmptyCells().length === 0) return false;
+        if (Common.countStones()['black'] === 0 || Common.countStones()['white'] === 0) return false;
+        if (Othello.getPotentialCells().length === 0) {
             passCount ++;
             var playerColor = colorOfTurn == 1 ? "黒" : "白";
             var alertFunc = function() {

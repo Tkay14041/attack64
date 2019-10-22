@@ -6,8 +6,8 @@ scoreBoard[0] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 scoreBoard[1] = [0,        100,  0, 10,  3,  3, 10,  0, 100,        0];
 scoreBoard[2] = [0,          0,  0, 10,  2,  2, 10,  0,   0,        0];
 scoreBoard[3] = [0,         10, 10, 20,  5,  5, 20, 10,  10,        0];
-scoreBoard[4] = [0,          3,  2,  5, 50, 50,  5,  2,   3,        0];
-scoreBoard[5] = [0,          3,  2,  5, 50, 50,  5,  2,   3,        0];
+scoreBoard[4] = [0,          3,  2,  5, 50, 50,  5,  2,  23,        0];
+scoreBoard[5] = [0,          3,  2,  5, 50, 50,  5, 22,   3,        0];
 scoreBoard[6] = [0,         10, 10, 20,  5,  5, 20, 10,  10,        0];
 scoreBoard[7] = [0,          0,  0, 10,  2,  2, 10,  0,   0,        0];
 scoreBoard[8] = [0,        100,  0, 10,  3,  3, 10,  0, 100,        0];
@@ -37,10 +37,8 @@ var CPU = CPU || {
         // var cpuIdx = Math.floor(Math.random() * cpuPotentialCells.length);
         var cpuCell = [];
         var max = 0;
-        console.log(cpuPotentialCells);
         for (let cell of cpuPotentialCells) {
             let score = scoreBoard[cell[1]][cell[0]];
-            console.log(score);
             if (max <= score) {
                 max = score;
                 cpuCell[0] = cell[0];
@@ -52,10 +50,11 @@ var CPU = CPU || {
         Common.drawStones(ctx);
     },
 
-    execCPU: function(ctx, turnText, blackCount, whiteCount, canvas, attackBtn) {
-        CPU.play(ctx);
-        Common.setText(turnText, blackCount, whiteCount);
-        Othello.checkGameOver(canvas, attackBtn);
-        Attack.checkHalfOccupied();
-    }
+    sleep: function(second) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve()
+            }, second * 1000)
+        });
+    } 
 }
