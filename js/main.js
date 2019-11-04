@@ -97,12 +97,14 @@ window.onload = function(){
         Attack.execAttack(ctx, inx, iny);
 
         Common.changeTurn();
+        Common.setText(turnText, blackCount, whiteCount);
+        
         if(!Othello.checkPass()) {
             await CPU.sleep(0.5);
             CPU.play(ctx);
-        } else {
-            Common.changeTurn();
-        }
+        } 
+        Common.changeTurn();
+        
         Common.setText(turnText, blackCount, whiteCount);
         Othello.checkGameOver(canvas, attackBtn);
         Attack.checkHalfOccupied();
