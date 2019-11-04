@@ -63,11 +63,7 @@ var CPU = CPU || {
             }
         }
         console.log(attackCells);
-        // if (Common.countStones()['empty'] === 46
-        //     && Common.countStones()['black'] > Common.countStones()['white']
-        //     ) {
-
-        // }
+        return attackCells.length !== 0;
     },
 
     attack: function() {
