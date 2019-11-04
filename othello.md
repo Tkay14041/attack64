@@ -68,4 +68,6 @@ refactor
 [x]・CPUの石を置く配点を修正する
 [x]・CPU関係リファクタリング
 
-・CPU.willAttack()の、「相手に次のターン置かれない」判定を実装
+[x]・CPU.findAttackCells()の、「相手に次のターン置かれない」判定を実装
+[x]・CPU.attack()で実際にアタックする
+[x]・一定の条件下でCPU.attackが自動発火
