@@ -29,7 +29,6 @@ var CPU = CPU || {
             }
         }
         Othello.flipStones(cpuCell[0], cpuCell[1]);
-        Common.changeTurn();
         Common.drawStones(ctx);
     },
 
@@ -69,7 +68,7 @@ var CPU = CPU || {
     attack: function(ctx) {
         const attackCells = CPU.findAttackCells();
         if (attackCells.length == 0) {
-            return;
+            CPU.play(ctx);
         } else {
             let corners = [];
             let centers = [];
@@ -90,7 +89,9 @@ var CPU = CPU || {
                 let attackIdx = Math.floor(Math.random() * centers.length);
                 [attackX, attackY] = centers[attackIdx];
             }
+            alert("CPUがAttackをします！");
             Attack.execAttack(ctx, attackX, attackY);
+            attackWhite = false;
         }
     },
 

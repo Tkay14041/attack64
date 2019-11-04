@@ -63,13 +63,24 @@ window.onload = function(){
         while(!canUserPlace) {
             if(!Othello.checkPass()) {
                 await CPU.sleep(0.5);
-                CPU.play(ctx);
+                // 残り14マスで発動
+                if (Common.countStones()['empty'] < 50
+                    && Common.countStones()['black'] > Common.countStones()['white']
+                    && attackWhite) {
+                    CPU.attack(ctx);          
+                } else {
+                    CPU.play(ctx);
+                }
+                Common.changeTurn();
             } else {
                 Common.changeTurn();
             }
             Common.setText(turnText, blackCount, whiteCount);
             Othello.checkGameOver(canvas, attackBtn);
-            Attack.checkHalfOccupied();
+
+            
+
+            Attack.checkHalfOccupied()
             // user's pass check
             if (!Othello.checkPass()) {
                 canUserPlace = true;
