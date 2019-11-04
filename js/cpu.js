@@ -43,6 +43,7 @@ var CPU = CPU || {
             const [x, y] = attackPotentialCell;
             if (point[x][y] !== 1) continue;
 
+            let attackFail = false;
             for (let dx = -1; dx <= 1; dx++) {
                 for (let dy = -1; dy <= 1; dy++) {
                     if (dx === 0 && dy === 0) continue;
@@ -50,18 +51,23 @@ var CPU = CPU || {
                     while (point[x + n * dx][y + n * dy] === 2) {
                         n++;
                     }
-                    if (!(n > 1 && point[x + n * dx][y + n * dy] === 1)) {
-                        attackCells.push(attackPotentialCell);
+                    if (n > 1 && point[x + n * dx][y + n * dy] === 1) {
+                        attackFail = true;
+                        break;
                     }
                 }
+                if (attackFail) break;
+            }
+            if (!attackFail) {
+                attackCells.push([x, y]);
             }
         }
         console.log(attackCells);
-        if (Common.countStones()['empty'] === 46
-            && Common.countStones()['black'] > Common.countStones()['white']
-            ) {
+        // if (Common.countStones()['empty'] === 46
+        //     && Common.countStones()['black'] > Common.countStones()['white']
+        //     ) {
 
-        }
+        // }
     },
 
     attack: function() {

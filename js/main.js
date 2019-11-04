@@ -52,7 +52,6 @@ window.onload = function(){
                 return;
             }
             Othello.flipStones(inx,iny);
-            // 石が置けた時点で内部的にはターンチェンジ
             Common.changeTurn();
             Common.drawStones(ctx);
         } else {
