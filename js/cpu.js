@@ -33,7 +33,7 @@ var CPU = CPU || {
         Common.drawStones(ctx);
     },
 
-    willAttack: function() {
+    findAttackCells: function() {
         let attackCells = [];
         const attackPotentialCells = [
             [1, 1], [1, 8], [8, 1], [8, 8],
@@ -63,11 +63,35 @@ var CPU = CPU || {
             }
         }
         console.log(attackCells);
-        return attackCells.length !== 0;
+        return attackCells;
     },
 
-    attack: function() {
-
+    attack: function(ctx) {
+        const attackCells = CPU.findAttackCells();
+        if (attackCells.length == 0) {
+            return;
+        } else {
+            let corners = [];
+            let centers = [];
+            corners = attackCells.filter(cell => {
+                let [x, y] = cell;
+                return (x === 1 || x === 8) && (y === 1 || y === 8);
+            });
+            centers = attackCells.filter(cell => {
+                let [x, y] = cell;
+                return (x === 4 || x === 5) && (y === 4 || y === 5);
+            });
+            let attackX;
+            let attackY;
+            if (corners.length >= 1) {
+                let attackIdx = Math.floor(Math.random() * corners.length);
+                [attackX, attackY] = corners[attackIdx];
+            } else {
+                let attackIdx = Math.floor(Math.random() * centers.length);
+                [attackX, attackY] = centers[attackIdx];
+            }
+            Attack.execAttack(ctx, attackX, attackY);
+        }
     },
 
     sleep: function(second) {

@@ -83,7 +83,7 @@ window.onload = function(){
         mouseX = event.pageX;
         mouseY = event.pageY;
         Common.fixCoordinate(canvas);
-        Attack.execAttack(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn);
+        Attack.execAttack(ctx, inx, iny);
 
         Common.changeTurn();
         if(!Othello.checkPass()) {

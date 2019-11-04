@@ -8,7 +8,7 @@ var Attack = Attack || {
         } 
     },
 
-    execAttack: async function(ctx, inx, iny, turnText, blackCount, whiteCount, canvas, attackBtn) {
+    execAttack: function(ctx, inx, iny) {
         if (point[inx][iny] == 0) return;
         
         if (colorOfTurn == 1) {
